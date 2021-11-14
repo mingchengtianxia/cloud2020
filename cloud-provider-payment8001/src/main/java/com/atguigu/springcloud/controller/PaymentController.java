@@ -41,6 +41,11 @@ public class PaymentController {
 		}
 	}
 
+	@GetMapping(value = "payment/lib")
+	public String getServerPort(){
+		return serverPort;
+	}
+
 	@GetMapping(value = "/payment/feign/timeout")
 	public String paymentFeignTimeout(){
 		try{
