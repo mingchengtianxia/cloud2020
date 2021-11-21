@@ -20,6 +20,9 @@ spring:
           uri: lb://cloud-payment-service
           predicates:
             - Path=/payment/lib/**       #断言，路径相匹配的进行路由
+#            - After=2021-11-14T15:39:27.786+08:00[Asia/Shanghai]
+#            - Cookie=username,zzyy
+            - Header=X-Request-Id,\d+   #请求头要有X-Request-Id属性，并且值为整数的正则表达式
 eureka:
   instance:
     hostname: cloud-gateway-service
