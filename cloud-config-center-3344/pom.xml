@@ -9,13 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-gateway-gateway9527</artifactId>
+    <artifactId>cloud-config-center-3344</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
-        <!--gateway-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
         <!-- eureka client-->
         <dependency>
@@ -44,4 +48,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
