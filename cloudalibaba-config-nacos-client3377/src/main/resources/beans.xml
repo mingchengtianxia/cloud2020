@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="audience" class="concert.Audience"/>
+
+<!--    <import resource="cd-config.xml"/>-->
+
+
+    <bean id="blankDisc" class="com.soundSystem.BlankDisc">
+        <property name="title" value="Sgt"/>
+        <property name="artist" value="The Beatles"/>
+        <property name="tracks">
+            <list>
+                <value>a</value>
+                <value>b</value>
+            </list>
+        </property>
+    </bean>
+
+<!--    <beans profile="dev">-->
+<!--        <bean id="dataSource" class="DataSource"-->
+<!--    </beans>-->
+
+    <aop:config>
+<!--        限制切点只匹配特定的bean-->
+        <aop:pointcut id="perform" expression="execution(** concert.Performance.perform(..)) and bean('blankDisc')"/>
+    </aop:config>
+<!--1. 直接定义-->
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:before method="silenceCellphone" pointcut="execution(** concert.Performance.perform(..))"/>
+            <aop:before method="takeSeat" pointcut="execution(** concert.Performance.perform(..))"/>
+            <aop:after-returning method="applause" pointcut="execution(** concert.Performance.perform(..))"/>
+            <aop:after-throwing method="demandRefund" pointcut="execution(** concert.Performance.perform(..))"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--2. 先定义切点-->
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:pointcut id="performance" expression="execution(** concert.Performance.perform(..))"/>
+            <aop:before method="silenceCellphone" pointcut-ref="performance"/>
+            <aop:before method="takeSeat" pointcut-ref="performance"/>
+            <aop:after-returning method="applause" pointcut-ref="performance"/>
+            <aop:after-throwing method="demandRefund" pointcut-ref="performance"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

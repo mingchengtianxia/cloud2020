@@ -17,4 +17,33 @@ public class ConfigCenterController {
         return configInfo;
     }
 
+
+    public static void main(String[] args) {
+        new ConfigCenterController().restart();
+    }
+
+    private void restart(){
+        String name = "threadController";
+        Thread thread = new Thread(this::run, name);
+        thread.setUncaughtExceptionHandler((t,e)->{
+            System.out.println("error"+e);
+            restart();
+        });
+        System.out.println("main");
+        thread.start();
+        System.out.println("main end");
+    }
+
+    final void run(){
+        while(true){
+            try {
+                Thread.sleep(1000);
+                System.out.println(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 }
